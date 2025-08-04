@@ -2,10 +2,12 @@ package th.mfu;
 
 import java.io.*;
 import java.net.*;
+import java.security.Provider.Service;
 
 public class MockWebServer implements Runnable {
 
     private int port;
+    private ServerSocket serverSocket;
 
     public MockWebServer(int port) {
         this.port = port;
@@ -13,25 +15,41 @@ public class MockWebServer implements Runnable {
 
     @Override
     public void run() {
-
+        try{ 
         // TODO Create a server socket bound to specified port
+        serverSocket = new ServerSocket(port);
+
 
         System.out.println("Mock Web Server running on port " + port + "...");
 
         while (true) {
             // TODO Accept incoming client connections
-
-            // TODO Create input and output streams for the client socket
-
-            // TODO: Read the request from the client using BufferedReader
+              // TODO: Read the request from the client using BufferedReader
 
             // TODO: send a response to the client
-            String response = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n"
+            try(
+                Socket clientSocket = serverSocket.accept();
+            
+
+           
+                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(),true)){
+                     String response = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n"
                     + "<html><body>Hello, Web! on Port " + port + "</body></html>";
 
-            // TODO: Close the client socket
+                    out.println(response);
+                }
+              
+
+          
+           
+
+            //
 
         }
+    }
+      catch(IOException e){
+                    e.printStackTrace();
+                }
 
     }
 
@@ -44,6 +62,7 @@ public class MockWebServer implements Runnable {
 
         // type any key to stop the server
         // Wait for any key press to stop the mock web server
+        
         System.out.println("Press any key to stop the server...");
         try {
             System.in.read();

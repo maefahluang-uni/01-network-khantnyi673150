@@ -52,7 +52,13 @@ Think about the following,  modify the code to experiment it and put your though
 - What would be the benefit of running many instances?
 
 ```
-  Your thought here...
+  We can run on different ports by creating  instaces with different port numbers.
+
+  We can run more than 2 instances by creationg more threads with different port numbers.
+
+  We can change the content in HTML by editing in the "response" HTML string
+
+  We can test on many servers instanly and when one is down we can use another one.
 ```
 **Please push the code back to Github to submit this lab**
 After you push, ensure you have green checkmark on the repository.
